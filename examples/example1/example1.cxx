@@ -142,6 +142,8 @@ namespace more_examples {
 
 
   /// Another concrete class (possibly from a client library) also inherited from the i_runner interface
+  ///
+  /// This class has no system automatic registration mechanism.
   class special_runner
     : public examples::i_runner
   {
@@ -164,7 +166,7 @@ namespace more_examples {
       std::cerr << "[log] special_runner::run: I'm special and I'm running..." << std::endl;
       return;
     }
-                                                         
+
   };
   
 } // end of namespace more_examples
