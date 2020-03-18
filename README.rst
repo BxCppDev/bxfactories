@@ -22,7 +22,7 @@ BxFactories must :
 
 - inherit  some unique  base class,  possibly abstract  (interface and
   polymorphism),
-- has a  default constructor which preferably  instantiates objects of
+- have a  default constructor which preferably  instantiates objects of
   this  class in  some reasonable  state,  meaning the  object is  not
   usable but at least is not corrupted (uninitialized pointers, memory
   leaks...), which should be the case in any circonstances anyway,

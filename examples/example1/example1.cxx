@@ -22,12 +22,12 @@ namespace examples {
     /// The main interface method
     virtual void run() = 0;
 
-    // We install a system registration mechanism for all classes inherited
-    // from this base class/interface
+    // We declare a system registration mechanism for all classes inherited from this base interface class
     BXFACTORIES_FACTORY_SYSTEM_REGISTER_INTERFACE(i_runner);
   
   };
   
+  // We implement a system registration mechanism for all classes inherited from this base interface class
   BXFACTORIES_FACTORY_SYSTEM_REGISTER_IMPLEMENTATION(examples::i_runner,
                                                      "examples::i_runner/__system__")
 
