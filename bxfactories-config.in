@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+#
+# Utility script used  to locate resources and  files installed within
+# the  BxFactories library.   This implementation  does not  support a
+# relocatable binary distribution of BxFactories.
+#
+# Copyright 2017 François Mauger <mauger@lpccaen.in2p3.fr>
+#
+# This file is part of BxFactories.
+#
+# BxFactories is free software: you  can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free  Software Foundation, either  version 3 of the  License, or
+# (at your option) any later version.
+#
+# BxFactories is distributed  in the hope that it will  be useful, but
+# WITHOUT  ANY   WARRANTY;  without  even  the   implied  warranty  of
+# MERCHANTABILITY or  FITNESS FOR A  PARTICULAR PURPOSE.  See  the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with BxFactories.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Description:  an  utility script  to  fetch  informations about  the
+# current BxFactories  installation. This  should be very  useful when
+# used from some  client scripts (i.e. wrapper/launcher  scripts for a
+# batch system on a computing farm).
+
+APPNAME="bxdecay0-config"
+prefix_dir="@CMAKE_INSTALL_PREFIX@"
+version_str="@BxFactories_VERSION@"
+orig_version_str="@BxFactories_DECAY0_VERSION@"
+lib_dir="${prefix_dir}/@CMAKE_INSTALL_LIBDIR@"
+bin_dir="${prefix_dir}/@CMAKE_INSTALL_BINDIR@"
+inc_dir="${prefix_dir}/@CMAKE_INSTALL_INCLUDEDIR@"
+data_dir="${prefix_dir}/@CMAKE_INSTALL_DATADIR@/@BxFactories_TAG@"
+example_dir="${data_dir}/examples"
+# resource_dir="${data_dir}/resources"
+# cmake_dir="${prefix_dir}/@CMAKE_INSTALL_CMAKEDIR@/@BxFactories_TAG@"
+cmake_dir="${prefix_dir}/@CMAKE_INSTALL_CMAKEDIR@/BxFactories"
+
+function print_usage()
+{
+
+    cat<<EOF
+
+bxfactories-config - Utility script to fetch informations about the BxFactories library installation.
+
+Options:
+  -h [ --help ]          Print help.
+
+  --version              Print version.
+
+  --prefix               Print installation prefix directory.
+
+  --bindir               Print binary directory.
+
+  --incdir               Print include base directory.
+
+  --datadir              Print data base directory.
+
+  --cmakedir             Print CMake config directory.
+
+  --resourcedir          Print resource directory.
+
+  --exampledir           Print examples directory.
+
+EOF
+    return
+}
+
+while [ -n "$?" ]; do
+      token="$1"
+      if [ "${token:0:1}" = "-" ]; then
+	  option="${token}"
+	  if [ "${option}" = "--help" -o "${option}" = "-h" ]; then
+	      print_usage
+	      exit 0
+	  elif [ "${option}" = "--version" ]; then
+	      echo ${version_str}
+	      exit 0
+	  elif [ "${option}" = "--prefix" ]; then
+	      echo ${prefix_dir}
+	      exit 0
+	  # elif [ "${option}" = "--libdir" ]; then
+	  #     echo ${lib_dir}
+	  #     exit 0
+	  elif [ "${option}" = "--bindir" ]; then
+	      echo ${bin_dir}
+	      exit 0
+	  elif [ "${option}" = "--incdir" ]; then
+	      echo ${inc_dir}
+	      exit 0
+	  elif [ "${option}" = "--datadir" ]; then
+	      echo ${data_dir}
+	      exit 0
+	  elif [ "${option}" = "--exampledir" ]; then
+	      echo ${example_dir}
+	      exit 0
+	  elif [ "${option}" = "--resourcedir" ]; then
+	      echo ${resource_dir}
+	      exit 0
+	  elif [ "${option}" = "--cmakedir" ]; then
+	      echo ${cmake_dir}
+	      exit 0
+	  else
+	      echo "error: ${APPNAME}: Invalid option '${option}' !" >&2
+	      print_usage
+	      exit 1
+	  fi
+      else
+	  echo "error: ${APPNAME}: Invalid argument '${token}' !" >&2
+	  print_usage
+	  exit 1
+      fi
+      shift 1
+done
+
+exit 0
+
+# end

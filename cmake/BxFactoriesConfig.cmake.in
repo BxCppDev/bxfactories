@@ -1,0 +1,52 @@
+# - Config file for the BxFactories package
+# It defines the following variables
+#  BxFactories_VERSION       - BxFactories version
+#  BxFactories_INCLUDE_DIR   - BxFactories include directory
+#  BxFactories_INCLUDE_DIRS  - BxFactories and dependencies include directories
+
+#----------------------------------------------------------------------
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#----------------------------------------------------------------------
+
+set(BxFactories_VERSION @BxFactories_VERSION@)
+
+@PACKAGE_INIT@
+
+#-----------------------------------------------------------------------
+# Handle paths/targets for third party deps here...
+#
+set(BxFactories_Boost_VERSION @Boost_MAJOR_VERSION@.@Boost_MINOR_VERSION@)
+message( STATUS "Boost version for BxFactories : ${BxFactories_Boost_VERSION}")
+set(BOOST_ROOT @BOOST_ROOT@)
+message( STATUS "Boost root for BxFactories    : ${BOOST_ROOT}")
+find_package(Boost ${BxFactories_Boost_VERSION} REQUIRED)
+
+#-----------------------------------------------------------------------
+# Include the file listing all the imported targets.
+# This is installed in the same location as us...
+#
+# if(NOT BxFactories_TARGETS_LOADED)
+#   include("${CMAKE_CURRENT_LIST_DIR}/BxFactoriesTargets.cmake")
+#   set(BxFactories_TARGETS_LOADED 1)
+# endif()
+
+set_and_check(BxFactories_INCLUDE_DIR @PACKAGE_BxFactories_CONFIG_INCLUDEDIR@)
+set_and_check(BxFactories_INCLUDE_DIRS
+  ${BxFactories_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS})
+
+### set(BxFactories_LIBRARIES BxFactories)
+### set(BxFactories_LIBRARIES BxFactories::BxFactories)
+
+# - end

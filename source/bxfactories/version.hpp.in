@@ -1,0 +1,11 @@
+#ifndef BXFACTORIES_VERSION_HPP
+#define BXFACTORIES_VERSION_HPP
+
+//! String encoded full version number, e.g. "1.2.3", available at compile time
+#define BXFACTORIES_LIB_VERSION "@BxFactories_VERSION@"
+
+#endif // BXFACTORIES_VERSION_HPP
+
+// Local Variables: --
+// mode: c++ --
+// End: --
