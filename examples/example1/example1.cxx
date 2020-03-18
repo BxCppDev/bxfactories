@@ -177,16 +177,17 @@ int main(void)
     {
       std::clog << std::endl << "================================================================" << std::endl;
       std::clog << "[log] Using the system/global factory register..." << std::endl;
-      BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner).print(std::clog,
-                                                                        "[log] ",
-                                                                        "System factory for classes inherited from example::i_runner: ");
+      auto sysReg = BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner);
+      sysReg.print(std::clog,
+                   "[log] ",
+                   "System factory for classes inherited from example::i_runner: ");
       std::clog << std::endl;
     
-      std::unique_ptr<examples::i_runner> runner1(BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner).get("examples::foo_runner")());
-      std::unique_ptr<examples::i_runner> runner2(BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner).get("examples::foo_runner")());
-      std::unique_ptr<examples::i_runner> runner3(BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner).get("more_examples::bar_runner")());
-      std::unique_ptr<examples::i_runner> runner4(BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner).get("more_examples::baz_runner")());
-      std::unique_ptr<examples::i_runner> runner5(BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner).get("more_examples::bar_runner")());
+      std::unique_ptr<examples::i_runner> runner1(sysReg.get("examples::foo_runner")());
+      std::unique_ptr<examples::i_runner> runner2(sysReg.get("examples::foo_runner")());
+      std::unique_ptr<examples::i_runner> runner3(sysReg.get("more_examples::bar_runner")());
+      std::unique_ptr<examples::i_runner> runner4(sysReg.get("more_examples::baz_runner")());
+      std::unique_ptr<examples::i_runner> runner5(sysReg.get("more_examples::bar_runner")());
       std::clog << std::endl;
     
       runner1->run();
@@ -201,7 +202,9 @@ int main(void)
       std::clog << std::endl << "================================================================" << std::endl;
       std::clog << "[log] Using a specific factory register, limited to only a few classes..." << std::endl;
       ::bxfactories::factory_register<examples::i_runner> myReg("Limited factory: ");
-      myReg.import_some(BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner),
+      auto sysReg = BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner);
+      // Import some of the object factories registered in the system register:
+      myReg.import_some(sysReg,
                         std::set<std::string>({
                             "more_examples::bar_runner",
                               "more_examples::baz_runner"}));
