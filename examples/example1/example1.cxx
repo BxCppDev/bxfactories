@@ -105,7 +105,7 @@ namespace more_examples {
                                                               more_examples::bar_runner,
                                                               "more_examples::bar_runner")
 
-  /// A concrete class inherited from the foo_runner concrete lass above
+  /// A concrete class inherited from the foo_runner concrete class above
   class baz_runner
     : public examples::foo_runner
   {
