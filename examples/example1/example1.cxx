@@ -22,12 +22,12 @@ namespace examples {
     /// The main interface method
     virtual void run() = 0;
 
-    // We declare a system registration mechanism for all classes inherited from this base interface class
+    // We declare a system registration mechanism for classes inherited from this base interface class
     BXFACTORIES_FACTORY_SYSTEM_REGISTER_INTERFACE(i_runner);
   
   };
   
-  // We implement the system registration mechanism for all classes inherited from this base interface class
+  // We implement the system registration mechanism
   BXFACTORIES_FACTORY_SYSTEM_REGISTER_IMPLEMENTATION(examples::i_runner,
                                                      "examples::i_runner/__system__")
 
@@ -61,7 +61,8 @@ namespace examples {
                                                            
   };
 
-  // We implement the automatic registration of this class in the system register of its base class
+  // We implement the automatic system registration of this class.
+  // This is the place where we choose an unique string registration identifier for this class.
   BXFACTORIES_FACTORY_SYSTEM_AUTO_REGISTRATION_IMPLEMENTATION(examples::i_runner,
                                                               examples::foo_runner,
                                                               "examples::foo_runner")
@@ -100,7 +101,7 @@ namespace more_examples {
                                                            
   };
 
-  // We implement the automatic registration of this class in the system register of its base class
+  // We implement the automatic system registration of this class
   BXFACTORIES_FACTORY_SYSTEM_AUTO_REGISTRATION_IMPLEMENTATION(examples::i_runner,
                                                               more_examples::bar_runner,
                                                               "more_examples::bar_runner")
@@ -129,13 +130,13 @@ namespace more_examples {
       return;
     }
 
-    // We declare the automatic registration mechanism of this class in the system register of its super base class
+    // We implement the automatic system registration of this class
     BXFACTORIES_FACTORY_SYSTEM_AUTO_REGISTRATION_INTERFACE(examples::i_runner,
                                                            more_examples::baz_runner)
                                                            
   };
 
-  // We implement the automatic registration of this class in the system register of its super base class
+  // We implement the automatic system registration of this class
   BXFACTORIES_FACTORY_SYSTEM_AUTO_REGISTRATION_IMPLEMENTATION(examples::i_runner,
                                                               more_examples::baz_runner,
                                                               "more_examples::baz_runner")
@@ -143,7 +144,8 @@ namespace more_examples {
 
   /// Another concrete class (possibly from a client library) also inherited from the i_runner interface
   ///
-  /// This class has no system automatic registration mechanism.
+  /// This class has no macros for system automatic registration but it is still possible to manually
+  /// enforce its registration in any factory register associated to the 'examples::i_runner' class.
   class special_runner
     : public examples::i_runner
   {
@@ -205,12 +207,12 @@ int main(void)
       std::clog << "[log] Using a specific factory register, limited to only a few classes..." << std::endl;
       ::bxfactories::factory_register<examples::i_runner> myReg("Limited factory: ");
       auto sysReg = BXFACTORIES_FACTORY_GET_SYSTEM_REGISTER(examples::i_runner);
-      // Import some of the object factories registered in the system register:
+      // Import some of the object factories registered in the system register (because we like them!)
       myReg.import_some(sysReg,
                         std::set<std::string>({
                             "more_examples::bar_runner",
                               "more_examples::baz_runner"}));
-      // Manual registration of the "special_runner" class:
+      // Manual registration of the "special_runner" class (because we like it too!):
       myReg.register_factory<more_examples::special_runner>("special", "A special runner");
       myReg.print(std::clog, "[log] ", "My own limited register: ");
       std::clog << std::endl;
@@ -221,6 +223,7 @@ int main(void)
               "special",
               "more_examples::baz_runner",
               "more_examples::dummy_runner"}});
+      // Attempt to instantiate and run some objects with the 'runner' interface:
       for (auto runner_type_id : runner_type_ids) {
         if (myReg.has(runner_type_id)) {
           std::clog << "[log] Runner with registration ID '" << runner_type_id << "' is to be instantiated." << std::endl;
