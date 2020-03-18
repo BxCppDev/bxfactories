@@ -27,7 +27,7 @@ namespace examples {
   
   };
   
-  // We implement a system registration mechanism for all classes inherited from this base interface class
+  // We implement the system registration mechanism for all classes inherited from this base interface class
   BXFACTORIES_FACTORY_SYSTEM_REGISTER_IMPLEMENTATION(examples::i_runner,
                                                      "examples::i_runner/__system__")
 
