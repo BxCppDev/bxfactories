@@ -11,7 +11,7 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 endif()
 
 cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
-project(BxFactories VERSION 0.1)
+project(BxFactories VERSION 1.0)
 # - Version of the original fortran BxFactories
 set(BxFactories_TAG "BxFactories-${BxFactories_VERSION}")
 message(STATUS "BxFactories_TAG=${BxFactories_TAG}")

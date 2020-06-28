@@ -23,7 +23,7 @@
 ///
 /// Example:
 /// \code
-/// // In header:
+/// // In header, e.g. base.hpp:
 /// class Base {
 /// public:
 ///   Base() = default;
@@ -31,26 +31,27 @@
 ///   BXFACTORIES_FACTORY_SYSTEM_REGISTER_INTERFACE(Base)
 /// };
 ///
-/// // In implementation:
+/// // In implementation, e.g. base.cpp:
 /// BXFACTORIES_FACTORY_SYSTEM_REGISTER_IMPLEMENTATION(Base)
 ///
-/// // In header:
+/// // In header, e.g. derived1.hpp:
 /// class Derived1 : public Base {
 /// public:
 ///   Derived1() = default;
 ///   BXFACTORIES_FACTORY_SYSTEM_AUTO_REGISTRATION_INTERFACE(Base, Derived1)
 /// };
 ///
+/// // In implementation, e.g. derived1.cpp:
 /// BXFACTORIES_FACTORY_SYSTEM_AUTO_REGISTRATION_IMPLEMENTATION(Base, Derived1, "Derived1")
 ///
-/// // In header:
+/// // In header, e.g. derived2.hpp:
 /// class Derived2 : public Base {
 /// public:
 ///   Derived2() = default;
 ///   BXFACTORIES_FACTORY_SYSTEM_AUTO_REGISTRATION_INTERFACE(Base, Derived2)
 /// };
 ///
-/// // In implementation:
+/// // In implementation, e.g. derived2.cpp:
 /// BXFACTORIES_FACTORY_SYSTEM_AUTO_REGISTRATION_IMPLEMENTATION(Base, Derived2, "Derived2")
 /// \endcode
 

@@ -153,7 +153,6 @@ namespace bxfactories {
 // Template definitions:
 #include <bxfactories/factory-inl.hpp>
 
-// Boost:
 #include <type_traits>
 
 namespace bxfactories {
